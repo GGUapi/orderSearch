@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        table, th, td {
+          border: 1px solid black;
+        }
+        th, td {
+          text-align: center;
+          padding: 8px;
+        }
+      </style>
+  </head>
+  <body>
+    <div>
+        <p style="text-align: center;"><img src="https://drive.google.com/file/d/1oxfbbuMVGdG78leoz0unc7hWXyKGML3S/view?usp=sharing"></p>
+        <h1 style="text-align: center;">配送進度查詢</h1>
+        <p style="text-align: center;">輸入金流單號</p>
+        <div style="text-align: center;">
+            <input type="text" id="paymentId" placeholder="請輸入您的金流單號" style="text-align: center;width: 400px;height: 50px;font-size: 18px;">
+        </div>
+        <div style="text-align: center;padding-top:10px;padding-bottom:10px;">
+            <button onclick="search()" style="
+            width: 400px;
+            height: 50px;
+            font-size: 18px;
+            background-color: lightskyblue;">開 始 查 詢</button>
+        </div>
+        <form id="outputForm">
+            <table>
+              <tr>
+                <th>金流單號</th>
+                <th>物流編號</th>
+                <th>物流狀態</th>
+              </tr>
+              <tr>
+                <td><input type="text" id="paymentIds" name="paymentId" style="border: 0px;text-align: center;"></td>
+                <td><input type="text" id="logisticsCompany" name="logisticsCompany" style="border: 0px;text-align: center;"></td>
+                <td><input type="text" id="trackingNumber" name="trackingNumber" style="border: 0px;text-align: center;"></td>
+              </tr>
+            </table>
+          </form>
+          <p id = "state" style="text-align:center;"></p>
+        <div style="text-align: -webkit-center;">
+            <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 300px;font-size:18px;padding-top:50px;">
+                <a href="http://www.express.com.tw/tools/positchecking.aspx" style="color: lightskyblue;text-decoration: none;">嘉里大榮</a>
+                <p>|</p>
+                <a href="https://postserv.post.gov.tw/pstmail/main_mail.html" style="color: lightskyblue;text-decoration: none;">郵局</a>
+                <p>|</p>
+                <a href="https://eservice.7-11.com.tw/e-tracking/search.aspx" style="color: lightskyblue;text-decoration: none;">7-11</a>
+                <p>|</p>
+                <a href="https://www.lwe.com.tw/services.php" style="color: lightskyblue;text-decoration: none;">海外配送</a>
+            
+            </div>
+        </div>
+        <p style="text-align: center;font-size:18px;"> 謝謝您的支持與等候，有任何問題都歡迎與客服聯繫！</p>
+        <div style="text-align: -webkit-center;">
+            <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 300px;font-size:18px;padding-top:50px;">
+                <p style="text-align: center;">
+                  <a href = "https://lin.ee/78t2Rte">
+                    <img src="https://drive.google.com/uc?export=view&id=1Bjsdi8xZphDvcNDXZgvRvEETvwrlnE5f"  style="width: 50%;">
+                  </a>
+                </p>
+                <p style="text-align: center;">
+                  <a href = "https://www.facebook.com/BEZALEL.CO">
+                    <img src="https://drive.google.com/uc?export=view&id=1UDW7tT4mucGRbwJ0JtRvwM50iWzxmNRN"  style="width: 50%;">
+                  </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+    <p style="text-align: center;"><img src="https://drive.google.com/uc?export=view&id=1oxfbbuMVGdG78leoz0unc7hWXyKGML3S"></p>
+    <!--<div id="output"></div> -->
+
+    <script>
+      function search() {
+        var paymentId = document.getElementById('paymentId').value;
+        google.script.run.withSuccessHandler(function(response) {
+          var outputDiv = document.getElementById('output');
+          if(response.error) {
+            alert(response.error);
+          } else {
+            document.getElementById('paymentIds').value = paymentId;
+            document.getElementById('logisticsCompany').value = response.trackingNumber;
+            document.getElementById('trackingNumber').value = "已寄貨";
+          }
+        }).searchByPaymentId(paymentId);
+        window.location.href = 'List.html';
+      }
+    </script>
+  </body>
+</html>
